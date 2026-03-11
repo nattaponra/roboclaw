@@ -3,10 +3,16 @@
  * @description MQTT and REST API communication for RoboClaw
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = "0.1.0";
 
-// TODO: Implement MQTT client
-// TODO: Implement Home Assistant integration
-// TODO: Implement REST API (optional)
+// Export interfaces
+export * from "./interfaces/index.js";
 
-console.log('RoboClaw Communication v' + VERSION);
+// Export MQTT
+export * from "./mqtt/index.js";
+
+// Export Home Assistant
+export * from "./homeassistant/index.js";
+
+// Export API
+export * from "./api/index.js";
