@@ -74,9 +74,28 @@ export class RobotAgent extends EventEmitter {
 				for (const msg of event.messages) {
 					// Only save user and assistant messages (skip system and tool messages)
 					if (msg.role === 'user' || msg.role === 'assistant') {
+						// Parse content properly
+						let content = '';
+						if (typeof msg.content === 'string') {
+							content = msg.content;
+						} else if (Array.isArray(msg.content)) {
+							// Extract text from content blocks
+							content = msg.content
+								.map((block: any) => {
+									if (block.type === 'text') {
+										return block.text;
+									}
+									return '';
+								})
+								.filter(Boolean)
+								.join('\n');
+						} else {
+							content = JSON.stringify(msg.content);
+						}
+
 						this.memory.conversation.addMessage({
 							role: msg.role,
-							content: typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content),
+							content,
 							timestamp: msg.timestamp,
 						});
 					}
@@ -185,6 +204,86 @@ export class RobotAgent extends EventEmitter {
 		} finally {
 			this.setStatus('idle');
 		}
+	}
+
+	/**
+	 * Chat with the agent and get response
+	 */
+	async chat(message: string): Promise<string> {
+		return new Promise((resolve, reject) => {
+			try {
+				this.setStatus('active');
+				
+				// Save user message
+				this.memory.conversation.addMessage({
+					role: 'user',
+					content: message,
+					timestamp: Date.now(),
+				});
+
+				let response = '';
+				
+				// Subscribe to agent events to capture response
+				const unsubscribe = this.agent.subscribe((event) => {
+					if (event.type === 'agent_end') {
+						// Extract assistant message from the event
+						const assistantMessages = event.messages.filter(
+							(msg: any) => msg.role === 'assistant'
+						);
+						
+						if (assistantMessages.length > 0) {
+							const lastMessage = assistantMessages[assistantMessages.length - 1];
+							
+							// Parse content
+							if (typeof lastMessage.content === 'string') {
+								response = lastMessage.content;
+							} else if (Array.isArray(lastMessage.content)) {
+								// Extract text from content blocks
+								response = lastMessage.content
+									.map((block: any) => {
+										if (block.type === 'text') {
+											return block.text;
+										}
+										return '';
+									})
+									.filter(Boolean)
+									.join('\n');
+							} else {
+								response = JSON.stringify(lastMessage.content);
+							}
+						}
+						
+						// Unsubscribe
+						unsubscribe();
+						
+						// Save assistant response
+						if (response) {
+							this.memory.conversation.addMessage({
+								role: 'assistant',
+								content: response,
+								timestamp: Date.now(),
+							});
+						}
+						
+						this.setStatus('idle');
+						resolve(response || 'No response from agent');
+					}
+				});
+
+				// Send prompt
+				this.agent.prompt(message).catch((error) => {
+					unsubscribe();
+					this.setStatus('error');
+					this.emit('robot:error', error as Error);
+					reject(error);
+				});
+				
+			} catch (error) {
+				this.setStatus('error');
+				this.emit('robot:error', error as Error);
+				reject(error);
+			}
+		});
 	}
 
 	/**

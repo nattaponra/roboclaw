@@ -10,6 +10,7 @@ import { initCommand } from "./commands/init.js";
 import { startCommand } from "./commands/start.js";
 import { skillCommand } from "./commands/skill.js";
 import { statusCommand } from "./commands/status.js";
+import { registerChatCommand } from "./commands/chat.js";
 
 const program = new Command();
 
@@ -23,6 +24,7 @@ program.addCommand(initCommand);
 program.addCommand(startCommand);
 program.addCommand(skillCommand);
 program.addCommand(statusCommand);
+registerChatCommand(program);
 
 // Parse arguments
 program.parse(process.argv);
