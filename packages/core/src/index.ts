@@ -22,4 +22,5 @@ export * from './scheduler/index.js';
 // Types
 export * from './types/index.js';
 
-// TODO: Export Skill system when implemented
+// Skills
+export * from './skills/index.js';

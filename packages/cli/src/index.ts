@@ -1,17 +1,28 @@
 #!/usr/bin/env node
 
 /**
- * @package @nattaponra/roboclaw-cli
- * @description Command-line interface for RoboClaw robot platform
+ * RoboClaw CLI
+ * Command-line interface for managing RoboClaw robots
  */
 
-const VERSION = '0.1.0';
+import { Command } from "commander";
+import { initCommand } from "./commands/init.js";
+import { startCommand } from "./commands/start.js";
+import { skillCommand } from "./commands/skill.js";
+import { statusCommand } from "./commands/status.js";
 
-// TODO: Implement CLI commands
-// TODO: Implement init command
-// TODO: Implement setup command
-// TODO: Implement start command
-// TODO: Implement skill commands
+const program = new Command();
 
-console.log('RoboClaw CLI v' + VERSION);
-console.log('Coming soon...');
+program
+	.name("roboclaw")
+	.description("CLI for RoboClaw robot platform")
+	.version("0.1.0");
+
+// Commands
+program.addCommand(initCommand);
+program.addCommand(startCommand);
+program.addCommand(skillCommand);
+program.addCommand(statusCommand);
+
+// Parse arguments
+program.parse(process.argv);
