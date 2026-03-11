@@ -1,0 +1,55 @@
+{
+  "name": "@nattaponra/roboclaw-cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for RoboClaw robot platform",
+  "type": "module",
+  "bin": {
+    "roboclaw": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/index.js",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "shx rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@nattaponra/roboclaw-core": "^0.1.0",
+    "@nattaponra/roboclaw-hardware": "^0.1.0",
+    "@nattaponra/roboclaw-voice": "^0.1.0",
+    "@nattaponra/roboclaw-vision": "^0.1.0",
+    "@nattaponra/roboclaw-communication": "^0.1.0",
+    "commander": "^13.0.0",
+    "inquirer": "^12.3.0",
+    "chalk": "^5.6.2",
+    "ora": "^8.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/inquirer": "^9.0.7",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  },
+  "keywords": [
+    "cli",
+    "robot",
+    "roboclaw",
+    "raspberry-pi"
+  ],
+  "author": "Nattapon Ra",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nattaponra/agent.git",
+    "directory": "packages/cli"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

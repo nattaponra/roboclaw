@@ -1,0 +1,31 @@
+# Source files (only publish dist)
+src/
+*.ts
+!*.d.ts
+tsconfig*.json
+
+# Tests
+**/*.test.ts
+**/*.spec.ts
+__tests__/
+coverage/
+
+# Development
+.vscode/
+.idea/
+*.swp
+
+# CI/CD
+.github/
+
+# Documentation (keep README)
+docs/
+
+# Examples
+examples/
+
+# Scripts
+scripts/
+
+# Environment
+.env*

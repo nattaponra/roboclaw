@@ -1,0 +1,49 @@
+{
+  "name": "@nattaponra/roboclaw",
+  "version": "0.1.0",
+  "description": "AI Robot Agent Platform for Raspberry Pi",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "clean": "npm run clean --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "keywords": [
+    "ai",
+    "robot",
+    "raspberry-pi",
+    "agent",
+    "automation",
+    "iot",
+    "llm",
+    "voice",
+    "vision",
+    "computer-vision"
+  ],
+  "author": "Nattapon Rakthong",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nattaponra/roboclaw.git"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.2",
+    "shx": "^0.3.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  }
+}

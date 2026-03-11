@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false
+  },
+  "include": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/hardware" },
+    { "path": "./packages/voice" },
+    { "path": "./packages/vision" },
+    { "path": "./packages/communication" },
+    { "path": "./packages/cli" }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "@nattaponra/roboclaw-voice",
+  "version": "0.1.0",
+  "description": "Voice interaction (STT/TTS) for RoboClaw using Whisper and Piper",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "shx rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@nattaponra/roboclaw-core": "^0.1.0",
+    "@nattaponra/roboclaw-hardware": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  },
+  "keywords": [
+    "voice",
+    "stt",
+    "tts",
+    "whisper",
+    "piper",
+    "speech"
+  ],
+  "author": "Nattapon Ra",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nattaponra/agent.git",
+    "directory": "packages/voice"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "@nattaponra/roboclaw-core",
+  "version": "0.1.0",
+  "description": "Core agent framework for RoboClaw robot platform",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "shx rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@mariozechner/pi-agent-core": "^0.57.1",
+    "@mariozechner/pi-ai": "^0.57.1",
+    "@sinclair/typebox": "^0.34.41",
+    "better-sqlite3": "^11.8.1",
+    "js-yaml": "^4.1.0",
+    "node-cron": "^3.0.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.2",
+    "@types/node-cron": "^3.0.11",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  },
+  "keywords": [
+    "ai",
+    "robot",
+    "agent",
+    "raspberry-pi",
+    "llm"
+  ],
+  "author": "Nattapon Ra",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nattaponra/agent.git",
+    "directory": "packages/core"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
