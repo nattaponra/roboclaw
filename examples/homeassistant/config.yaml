@@ -1,0 +1,80 @@
+# Home Assistant Integration Example
+# RoboClaw robot with MQTT and Home Assistant discovery
+
+robot:
+  name: "Home Robot"
+  platform: raspberry-pi-4
+  description: "Robot integrated with Home Assistant"
+
+llm:
+  provider: openai
+  model: gpt-4
+  api_key: ${OPENAI_API_KEY}
+
+features:
+  voice:
+    enabled: true
+    stt:
+      engine: whisper
+      model: base
+      language: en
+    tts:
+      engine: piper
+      voice: en_US-lessac-medium
+
+  vision:
+    enabled: true
+    object_detection:
+      enabled: true
+      model: yolov8n
+    face_recognition:
+      enabled: true
+
+memory:
+  path: "./data/memory.db"
+  max_conversations: 100
+
+# MQTT and Home Assistant
+communication:
+  mqtt:
+    enabled: true
+    broker: "mqtt://localhost"
+    port: 1883
+    # username: ${MQTT_USERNAME}
+    # password: ${MQTT_PASSWORD}
+  
+  homeassistant:
+    enabled: true
+    discovery_prefix: "homeassistant"
+    node_id: "roboclaw"
+    device:
+      name: "Home Robot"
+      model: "RoboClaw v0.1"
+      manufacturer: "RoboClaw"
+
+# Automated tasks
+automation:
+  schedule:
+    - name: "morning_greeting"
+      cron: "0 8 * * *"
+      action: "speak"
+      params:
+        text: "Good morning! It's time to wake up."
+    
+    - name: "security_check"
+      cron: "0 22 * * *"
+      action: "vision_scan"
+      params:
+        mode: "security"
+
+skills:
+  builtin:
+    - greeting
+  custom: []
+
+# Hardware (optional)
+hardware:
+  camera:
+    type: picamera
+    resolution: [1280, 720]
+    fps: 30

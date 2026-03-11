@@ -2,105 +2,167 @@
 
 **AI Robot Agent Platform for Raspberry Pi**
 
-Build intelligent robots with voice interaction, computer vision, and AI capabilities - all configured through simple YAML files.
+Build intelligent robots with voice interaction, computer vision, and AI capabilities - all configured through simple YAML files. No coding required for basic setups!
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 
 ---
 
 ## ✨ Features
 
-- 🎤 **Voice Interaction** - Local STT (Whisper) + TTS (Piper) - works offline
-- 👁️ **Computer Vision** - Object detection (YOLO), face recognition, scene understanding
-- 🤖 **LLM Integration** - OpenAI, Claude, and more via pi-mono
-- 🏠 **Home Assistant** - MQTT integration for smart home control
-- 🧠 **Persistent Memory** - Remember conversations and recognize people
-- 🔌 **Hardware Abstraction** - No GPIO knowledge required - config-driven setup
-- 🎯 **Skill System** - Extensible plugin architecture for custom behaviors
-- ⚙️ **Config-Driven** - YAML-based configuration with interactive setup wizard
+### 🎤 Voice Interaction
+- **Local STT** - Whisper.cpp for speech-to-text (works offline!)
+- **Local TTS** - Piper for natural text-to-speech
+- **Wake Word Detection** - Customizable activation phrases
+- **Real-time Processing** - Low-latency voice interaction
+
+### 👁️ Computer Vision
+- **Object Detection** - YOLO integration for real-time detection
+- **Face Recognition** - Remember and identify people
+- **Vision LLM** - GPT-4V, Claude 3 integration for scene understanding
+- **Camera Support** - Pi Camera and USB cameras
+
+### 🤖 AI & LLM
+- **Multi-Provider** - OpenAI, Anthropic, Google, Mistral, Groq
+- **Local LLM** - Ollama support for privacy
+- **Conversation Memory** - Persistent chat history with search
+- **Context-Aware** - Remembers users, preferences, and past interactions
+
+### 🏠 Home Automation
+- **MQTT Integration** - Full Home Assistant support
+- **Auto-Discovery** - Devices appear automatically in HA
+- **Smart Home Control** - Control lights, switches, sensors
+- **Scheduled Tasks** - Cron-based automation
+
+### 🔧 Hardware
+- **GPIO Control** - Motors, sensors, LEDs (config-driven)
+- **Multiple Drivers** - L298N, TB6612 motors; HC-SR04, VL53L0X sensors
+- **Plug-and-Play** - No GPIO knowledge required
+- **Mock Drivers** - Test without hardware
+
+### 🎯 Extensible
+- **Skill System** - Plugin architecture for custom behaviors
+- **Event-Driven** - React to robot events
+- **TypeScript API** - Full type safety
+- **Hot Reload** - Update skills without restart
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Raspberry Pi 4/5 (4GB+ RAM recommended)
-- Raspberry Pi OS (64-bit)
-- Node.js 20+
-- Camera module or USB camera
-- USB microphone and speaker
-
 ### Installation
 
 ```bash
-# Install CLI globally
+# Install RoboClaw CLI
 npm install -g @nattaponra/roboclaw-cli
 
-# Create your robot project
+# Create a new robot project
 roboclaw init my-robot
-
-# Enter directory
 cd my-robot
 
-# Install dependencies
-npm install
+# Configure your robot
+nano config.yaml
 
-# Configure hardware (interactive wizard)
-roboclaw setup
-
-# Add your API keys to .env file
-nano .env
-
-# Start your robot!
+# Start your robot
 roboclaw start
 ```
 
-That's it! Your robot is now running and ready to interact.
+### Example Configuration
+
+```yaml
+robot:
+  name: "My Robot"
+  platform: raspberry-pi-4
+
+llm:
+  provider: openai
+  model: gpt-4
+  api_key: ${OPENAI_API_KEY}
+
+features:
+  voice:
+    enabled: true
+    stt:
+      engine: whisper
+      model: base
+    tts:
+      engine: piper
+      voice: en_US-lessac-medium
+
+  vision:
+    enabled: true
+    object_detection:
+      enabled: true
+
+memory:
+  path: "./data/memory.db"
+```
 
 ---
 
-## 📦 Packages
+## 📦 Architecture
 
-This is a monorepo containing multiple packages:
+RoboClaw is built as a monorepo with specialized packages:
 
-| Package | Description |
-|---------|-------------|
-| **[@nattaponra/roboclaw-core](./packages/core)** | Core agent, memory, scheduler, skills |
-| **[@nattaponra/roboclaw-hardware](./packages/hardware)** | GPIO, camera, motor, sensor drivers |
-| **[@nattaponra/roboclaw-voice](./packages/voice)** | Speech-to-text (Whisper) and text-to-speech (Piper) |
-| **[@nattaponra/roboclaw-vision](./packages/vision)** | Object detection, face recognition, Vision LLM |
-| **[@nattaponra/roboclaw-communication](./packages/communication)** | MQTT client and REST API |
-| **[@nattaponra/roboclaw-cli](./packages/cli)** | Command-line interface tool |
+### Core Packages
+
+- **`@nattaponra/roboclaw-core`** - Agent core, memory, scheduler, skills
+- **`@nattaponra/roboclaw-hardware`** - GPIO, motors, sensors, cameras
+- **`@nattaponra/roboclaw-voice`** - STT/TTS with Whisper and Piper
+- **`@nattaponra/roboclaw-vision`** - YOLO, face recognition, Vision LLM
+- **`@nattaponra/roboclaw-communication`** - MQTT, Home Assistant, REST API
+- **`@nattaponra/roboclaw-cli`** - Command-line interface
+
+### Design Principles
+
+- **Config-Driven** - YAML configuration for everything
+- **Interface-Based** - Easy to swap implementations
+- **Event-Driven** - Reactive architecture
+- **Type-Safe** - Full TypeScript with strict mode
+- **Testable** - Mock implementations for all drivers
+- **Modular** - Use only what you need
 
 ---
 
 ## 📚 Documentation
 
-- [Getting Started](./docs/getting-started.md) - Complete setup guide
-- [API Reference](./docs/api-reference.md) - Programming APIs
-- [Hardware Guide](./docs/hardware-guide.md) - Wiring diagrams and GPIO pins
-- [Skill Development](./docs/skill-development.md) - Create custom robot skills
-- [Configuration](./docs/configuration.md) - config.yaml reference
-- [Troubleshooting](./docs/troubleshooting.md) - Common issues and solutions
+### Getting Started
+- [Quick Start Guide](./docs/getting-started.md)
+- [Installation](./docs/installation.md)
+- [Configuration Guide](./docs/configuration.md)
 
----
+### Guides
+- [Skill Development](./docs/skill-development.md)
+- [Hardware Setup](./docs/hardware-setup.md)
+- [Home Assistant Integration](./docs/homeassistant.md)
+- [Voice Setup](./docs/voice-setup.md)
+- [Vision Setup](./docs/vision-setup.md)
 
-## 🎯 Examples
+### API Reference
+- [Core API](./packages/core/README.md)
+- [Hardware API](./packages/hardware/README.md)
+- [Voice API](./packages/voice/README.md)
+- [Vision API](./packages/vision/README.md)
+- [Communication API](./packages/communication/README.md)
 
-Check out the [examples](./packages/examples) directory for complete projects:
-
-- **[Minimal](./packages/examples/minimal)** - Basic voice-enabled robot
-- **[Home Assistant](./packages/examples/home-assistant)** - Smart home robot with MQTT
-- **[Security Bot](./packages/examples/security-bot)** - Patrol and motion detection
-- **[Pet Robot](./packages/examples/pet-robot)** - Playful companion robot
+### Examples
+- [Minimal Robot](./examples/minimal/) - Simplest setup
+- [Home Assistant Robot](./examples/homeassistant/) - Full HA integration
+- [Voice Assistant](./examples/voice-assistant/) - Voice-controlled robot
 
 ---
 
 ## 🛠️ Development
 
-### Setup Development Environment
+### Prerequisites
+
+- Node.js 20+
+- pnpm (recommended) or npm
+- TypeScript 5.7+
+
+### Setup
 
 ```bash
 # Clone the repository
@@ -116,64 +178,94 @@ npm run build
 # Run tests
 npm test
 
-# Lint and format
+# Run linter
 npm run lint
-npm run format
 ```
 
 ### Project Structure
 
 ```
-roboclaw/
+agent/
 ├── packages/
 │   ├── core/              # Core agent framework
 │   ├── hardware/          # Hardware drivers
 │   ├── voice/             # Voice I/O
 │   ├── vision/            # Computer vision
 │   ├── communication/     # MQTT & API
-│   ├── cli/               # CLI tool
-│   └── examples/          # Example projects
+│   └── cli/               # CLI tool
+├── examples/              # Example projects
 ├── docs/                  # Documentation
-├── scripts/               # Build and setup scripts
-└── .github/               # CI/CD workflows
+└── README.md
 ```
+
+---
+
+## 🎯 Use Cases
+
+### Home Automation
+- Voice-controlled smart home
+- Security monitoring with face recognition
+- Automated routines and notifications
+
+### Personal Assistant
+- Schedule management
+- Reminders and alarms
+- Information lookup
+
+### Educational
+- Learn robotics and AI
+- Computer vision projects
+- IoT integration
+
+### Custom Robots
+- Delivery robots
+- Pet robots
+- Telepresence robots
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-### Development Principles
+### Areas for Contribution
 
-- ✅ **SOLID principles** - Clean, maintainable code
-- ✅ **Test coverage** - 70%+ unit test coverage
-- ✅ **TypeScript** - Type-safe throughout
-- ✅ **Documentation** - Well-documented APIs
+- New hardware drivers (motors, sensors)
+- Additional voice/vision models
+- Built-in skills
+- Documentation improvements
+- Bug fixes and testing
 
 ---
 
-## 📄 License
+## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+MIT License - see [LICENSE](./LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Built on top of [pi-mono](https://github.com/badlogic/pi-mono) for LLM integration
-- Powered by [Whisper](https://github.com/openai/whisper) for speech recognition
-- Text-to-speech by [Piper](https://github.com/rhasspy/piper)
-- Object detection using [YOLOv8](https://github.com/ultralytics/ultralytics)
+- **pi-mono** by [@mariozechner](https://github.com/mariozechner) - LLM abstraction
+- **Whisper.cpp** - Fast local speech recognition
+- **Piper** - High-quality local TTS
+- **YOLOv8** - State-of-the-art object detection
+- **Home Assistant** - Open-source home automation
 
 ---
 
-## 📞 Support
+## 📧 Contact
 
-- 📖 [Documentation](./docs)
-- 💬 [GitHub Discussions](https://github.com/nattaponra/agent/discussions)
-- 🐛 [Issue Tracker](https://github.com/nattaponra/agent/issues)
+- **Author**: Nattapon Ra
+- **GitHub**: [@nattaponra](https://github.com/nattaponra)
+- **Issues**: [GitHub Issues](https://github.com/nattaponra/agent/issues)
 
 ---
 
-**Made with ❤️ for the Raspberry Pi robotics community**
+## 🌟 Star History
+
+If you find RoboClaw useful, please consider giving it a star! ⭐
+
+---
+
+**Built with ❤️ for the Raspberry Pi and robotics community**
