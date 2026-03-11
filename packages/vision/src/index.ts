@@ -3,11 +3,13 @@
  * @description Computer vision capabilities for RoboClaw (YOLO, face recognition, Vision LLM)
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = "0.1.0";
 
-// TODO: Implement YOLO object detection
-// TODO: Implement face recognition
-// TODO: Implement Vision LLM integration
-// TODO: Implement VisionManager
+// Export interfaces
+export * from "./interfaces/index.js";
 
-console.log('RoboClaw Vision v' + VERSION);
+// Export drivers
+export * from "./drivers/index.js";
+
+// Export factory
+export * from "./factory/index.js";

@@ -3,10 +3,16 @@
  * @description Voice interaction (STT/TTS) for RoboClaw using Whisper and Piper
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = "0.1.0";
 
-// TODO: Implement Whisper STT integration
-// TODO: Implement Piper TTS integration
-// TODO: Implement VoiceManager
+// Export interfaces
+export * from "./interfaces/index.js";
 
-console.log('RoboClaw Voice v' + VERSION);
+// Export drivers
+export * from "./drivers/index.js";
+
+// Export factory
+export * from "./factory/index.js";
+
+// Export voice manager
+export { VoiceManager, type VoiceManagerConfig } from "./voice-manager.js";
